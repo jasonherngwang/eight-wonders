@@ -24,6 +24,10 @@ You can start an itinerary from scratch, or customize one of our favorites such 
 
 ![Eight Wonders - Share](public/images/eight_wonders_sharing.png)
 
+### :world_map: Generates a Link to [Great Circle Mapper](http://www.gcmap.com/)
+
+![Eight Wonders - GC Map](public/images/gcmap_example.jpg)
+
 ## How it Works
 
 Eight Wonders is an optional project built halfway through the [Launch School](https://launchschool.com/) Core Curriculum, Ruby track. The material covered by this point includes fundamental Ruby syntax, OOP, closures, regex, testing, application packaging, deployment, networking, databases, HTML & CSS, and problem solving. I built this project to use what I've learned to make something fun.
@@ -38,7 +42,7 @@ Eight Wonders is an optional project built halfway through the [Launch School](h
 * Vanilla HTML, CSS, and JS
 * [autoComplete.js](https://tarekraafat.github.io/autoComplete.js/#/) search
 * ID generation with [Nano ID](https://github.com/ai/nanoid)
-* Deployed on [fly.io](https://fly.io/)
+* Github Action for continuous deployment to [fly.io](https://fly.io/)
 
 ### :1234: Sorting Methodology
 
