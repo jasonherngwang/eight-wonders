@@ -1,0 +1,38 @@
+<article id="sharing">
+  <h1>Share Your Itinerary</h1>
+  <h2>
+    Take a Screenshot for
+    <i data-feather="instagram"></i><i data-feather="facebook"></i><i data-feather="twitter"></i><i data-feather="slack"></i>
+  </h2>
+  <div id="sharing-container">
+    <div>
+      <section id="sharing-card">
+        <img src="/images/sharing_bg.jpg" />
+        <div id="city-names">
+          <% if @itinerary.destinations.size > 0%>
+            <% @itinerary.destinations.each do |destination| %>
+              <p class="city-name"><%= destination.municipality %></p>
+            <% end %>
+          <% else %>
+            <p>STAYING 🏠</p>
+          <% end %>
+        </div>
+        <div id="card-caption">
+          <p class="accent-color">EIGHT WONDERS</p>
+          <p>CODE: <%= @itinerary.code %></p>
+        </div>
+        <div class="corner-icon top-left">🌎</div>
+        <div class="corner-icon top-right">✈️</div>
+      </section>
+      <a href="/itinerary/<%= @itinerary.code %>">
+        <button class="inline-button" type="button">
+          RETURN TO ITINERARY
+        </button>
+      </a>
+    </div>
+    <figure>
+      <img src="/images/illustration_suitcases.svg" 
+          alt="Illustration of 2 travelers talking to each other." />
+    </figure>
+  </div>
+</article>

@@ -1,0 +1,80 @@
+<header id="itinerary-info">
+  <span>ITINERARY CODE: </span>
+  <button class="copy-itinerary" onclick="copyItineraryCode()">
+    <span id="itineraryCode"><%= @itinerary.code %></span> 
+    <i data-feather="copy"></i>
+  </button>
+  <h1 id="itinerary-name"><%= @itinerary.name %></h1>
+  <div class="itinerary-button-wrapper">
+    <div class="inline-buttons">
+      <form action="/itinerary/<%= @itinerary.code %>/edit" method="get">
+        <button class="inline-button" type="submit">RENAME</button>
+      </form>
+      <form action="/itinerary/<%= @itinerary.code %>/copy" method="post">
+        <button class="inline-button" type="submit">COPY</button>
+      </form>
+      <form action="/itinerary/<%= @itinerary.code %>/sharing" method="get">
+        <button class="inline-button" type="submit">SHARE</button>
+      </form>
+    </div>
+    <form action="/itinerary/<%= @itinerary.code %>/delete" method="post" 
+          onSubmit="return confirm('Are you sure you want to delete the itinerary?')">
+      <button class="inline-button delete" type="submit">DELETE ITINERARY</button>
+    </form>
+  </div>
+  <% if @itinerary.destinations.size > 1 %>
+    <p>🗺️ Link to flight path on GC Map<a href="#gcmap-note"><sup>[1]</sup></a>:</p>
+    <a href="http://www.gcmap.com/mapui?P=<%= @itinerary.flight_path %>" target="_blank">
+      <%= @itinerary.flight_path %>
+    </a>
+  <% end %>
+</header>
+<article id="update-destination">
+  <% unless @itinerary.destinations.size >= 8 %>
+    <p>You've selected <%= @itinerary.destinations.size %> of 8 destinations.</p>
+    <section id="add-destination">
+      <form action="/itinerary/<%= @itinerary.code %>/destinations" method="post">
+        <dl>
+          <dt>
+            <label for="airport-search">Add an airport</label>
+          </dt>
+          <dd>
+            <div class="autoComplete_wrapper">
+              <input id="autoComplete" name="iata" type="search" dir="ltr" 
+                     spellcheck=false autocorrect="off" autocomplete="off" 
+                     autocapitalize="off" value="">
+            </div>
+          </dd>
+        </dl>
+        <fieldset class="actions">
+          <button class="primary fullwidth" type="submit">
+            ADD TO ITINERARY
+          </button>
+        </fieldset>
+      </form>
+    </section>
+    <section id="randomize-destination">
+      <p>
+        <span class="accent-color">Feeling Adventurous?</span>
+        Randomly select all remaining destinations!
+      </p>
+      <form action="/itinerary/<%= @itinerary.code %>/randomize" method="post">
+        <button class="primary bright fullwidth" type="submit">
+          🎲 RANDOMIZE ITINERARY
+        </button>
+      </form>
+    </section>
+  <% else %>
+    <p class="itinerary-complete">
+      You've selected all 8 destinations, so your itinerary is complete! 🎉
+    </p>
+  <% end %>
+</article>
+<ul id="destinations">
+  <% @itinerary.destinations.each_with_index do |destination, idx| %>
+    <%== erb :"destination_card", layout: nil, 
+             locals: { destination: destination, order: idx + 1, 
+             complete: @itinerary.destinations.size == 8 } %>
+  <% end %>
+</ul>
+<p id="gcmap-note" class="footnote">[1] Discrepancies between the OurAirports and GC Map data could yield an incorrect flight map. GC Map may be unable to find an IATA code or have it referencing a different airport. To fix, swap with a nearby airport.</p>

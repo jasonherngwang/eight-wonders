@@ -1,0 +1,53 @@
+<li class="destination-card">
+  <div class="banner">
+    <div class="destination-name">
+      <h1><%= destination.municipality %>, <%= destination.country %></h1>
+      <a href="https://www.google.com/maps/@?api=1&map_action=map&center=<%= destination.latitude %>%2C<%= destination.longitude %>&zoom=13" target="_blank">
+        <p>
+          <%= destination.airport_name.gsub("International", "Intl")
+                                      .gsub(" Airport", "")
+                                      .upcase %> (<%= destination.iata_code %>)
+        </p>
+      </a>
+    </div>
+    <div class="badge<%= complete ? " itinerary-complete" : "" %>">
+      <%= order %>
+    </div>
+  </div>
+  <ul>
+    <% destination.experiences.each do |experience| %>
+      <%== erb :"experience", layout: nil, 
+               locals: { destination: destination, experience: experience } %>
+    <% end %>
+  </ul>
+  <% if destination.experiences.size < 3 %>
+    <div id="experiences">
+      <form action="/itinerary/<%= @itinerary.code %>/destinations/<%= destination.id %>/experiences" method="post">
+        <dl>
+          <dt>
+            <label for="text">Add experience (up to 3):</label>
+          </dt>
+          <dd>
+            <input type="text" name="text" id="text" value="" 
+                   placeholder="<%= ["Take a walking tour.",
+                                     "Try out some street food.",
+                                     "Visit historical sites.",
+                                     "Go shopping!",
+                                     "Visit a local museum.",
+                                     "Learn a new language.",
+                                     "Enjoy the local cuisine.",
+                                     "Do a pub crawl."].sample %>" />
+            <button class="inline-button" type="submit">
+              ADD
+            </button>
+          </dd>
+        <dl>
+      </form>
+    </div>
+  <% end %>
+  <form action="/itinerary/<%= @itinerary.code %>/destinations/<%= destination.id %>/delete" method="post">
+    <button class="inline-button delete" type="submit">
+      DELETE DESTINATION
+    </button>
+  </form>
+</li>

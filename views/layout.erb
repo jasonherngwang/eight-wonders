@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eight Wonders</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400;1,500&family=Work+Sans:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/stylesheets/reset.css">
+  <link rel="stylesheet" href="/stylesheets/styles.css">
+  <link rel="stylesheet" href="/stylesheets/autocomplete.css">
+</head>
+<body>
+  <nav>
+    <div id="logo">
+      <a href="/">EIGHT WONDERS</a>
+    </div>
+    <div id="nav-links">
+      <ul>
+        <li><a href="/faq">FAQ</a></li>
+      </ul>
+    <div>
+  </nav>
+
+  <aside>
+    <% if session[:error] %>
+      <div class="flash error">
+        <p><%= session.delete(:error) %></p>
+      </div>
+    <% end %>
+
+    <% if session[:success] %>
+      <div class="flash success">
+        <p><%= session.delete(:success) %></p>
+      </div>
+    <% end %>
+  </aside>
+  
+  <main>
+    <%== yield %>
+  </main>
+
+  <footer>
+    <p>EIGHT WONDERS is a fictional travel agency.</p>
+    <p>This website was built using fundamental concepts from 
+       <a href="https://www.launchschool.com/" target="_blank">Launch School 🚀</a>
+    </p>
+    <p>
+      <a href="https://storyset.com/travel" target="_blank">Travel illustrations by Storyset</a>
+    </p>
+  </footer>
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.7/dist/autoComplete.min.js"></script>
+<script src="/javascript/autocomplete_config.js"></script>
+<script src="/javascript/app.js"></script>
+<script src="https://unpkg.com/feather-icons"></script>
+<script>feather.replace()</script>
+</html>

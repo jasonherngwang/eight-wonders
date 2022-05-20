@@ -1,0 +1,26 @@
+<section id="edit-itinerary-name">
+  <h1>Rename Your Itinerary</h1>
+  <form action="/itinerary/<%= @itinerary_info["code"] %>" method="post">
+    <dl>
+      <dt>
+        <label for="name">Itinerary name</label>
+      </dt>
+      <dd>
+        <input type="text" name="name" id="name" 
+               value="<%= @itinerary_info["name"] %>" />
+      </dd>
+      <dd>
+        <div class="inline-buttons">
+          <button class="inline-button" type="submit">
+            RENAME
+          </button>
+          <a href="/itinerary/<%= @itinerary_info["code"] %>">
+            <button class="inline-button" type="button">
+              CANCEL
+            </button>
+          </a>
+        </div>
+      </dd>
+    </dl>
+  </form>
+</section>

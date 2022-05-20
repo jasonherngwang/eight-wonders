@@ -1,0 +1,189 @@
+<header id="hero">
+  <figure class="hero-image" hidden>
+    <img src="/images/manarola.jpg" 
+         alt="Colorful Buildings in Manarola, Cinque Terre, Italy" />
+  </figure>
+  <figure class="hero-image-mobile">
+    <img src="/images/manarola_overlay.jpg" 
+         alt="Colorful Buildings in Manarola, Cinque Terre, Italy" />
+  </figure>
+  <section>
+    <p>LET'S PLAN YOUR</p>
+    <h1>
+      round-the-world<br>
+      <span>adventure &#128747;</span>
+    </h1>
+    <div id="instructions">
+      <p>Create an itinerary with <span class="accent-color">8 of your bucket list destinations</span>, anywhere in the world. We’ll find the shortest flight path so you spend less time on the plane and more time making memories!</p>
+    </div>
+    <form action="/itinerary/new" method="get">
+      <button class="primary hero" type="submit">
+        CREATE NEW ITINERARY <i data-feather="arrow-right-circle"></i>
+      </button>
+    </form>
+    <form action="/itinerary/retrieve" method="get" id="retrieve-itinerary">
+      <dl>
+        <dt>
+          <label for="code">Have an itinerary code?</label>
+        </dt>
+        <dd>
+          <input type="text" name="code" id="code" value=""
+                 placeholder="E.g. DsheWK6w" size=16 />
+          <button class="inline-button" type="submit">
+            RETRIEVE
+          </button>
+        </dd>
+      <dl>
+    </form>
+
+  </section>
+</header>
+<section id="favorite-itineraries">
+  <h2>CUSTOMIZE ONE OF OUR FAVORITE ITINERARIES</h2>
+  <article id="itinerary-cards">
+    <section>
+      <div class="itinerary-image-container michelin">
+        <h2>🍣 Michelin Star Dining</h2>
+      </div>
+      <ul class="destination-list">
+        <li>Los Angeles</li>
+        <li>Kyoto</li>
+        <li>Hong Kong</li>
+        <li>Copenhagen</li>
+      </ul>
+      <ul class="destination-list">
+        <li>London</li>
+        <li>Paris</li>
+        <li>San Sebastian</li>
+        <li>New York</li>
+      </ul>
+      <div class="button-container">
+        <form action="/itinerary/oS3UW8wL/copy" method="post">
+          <button class="primary fullwidth" type="submit">
+            CUSTOMIZE <i data-feather="arrow-right-circle"></i>
+          </button>
+        </form>
+      </div>
+    </section>
+    <section>
+      <div class="itinerary-image-container festivals">
+        <h2>🎉 Festivals!</h2>
+      </div>
+      <ul class="destination-list">
+        <li>Burning Man</li>
+        <li>Carnival</li>
+        <li>La Tomatina</li>
+        <li>Mardi Gras</li>
+      </ul>
+      <ul class="destination-list">
+        <li>Songkran</li>
+        <li>Holi</li>
+        <li>Montreal Jazz</li>
+        <li>St. Patrick's</li>
+      </ul>
+      <div class="button-container">
+        <form action="/itinerary/YYKn64V1/copy" method="post">
+          <button class="primary fullwidth" type="submit">
+            CUSTOMIZE <i data-feather="arrow-right-circle"></i>
+          </button>
+        </form>
+      </div>
+    </section>
+    <section>
+      <div class="itinerary-image-container wonders">
+        <h2>😲 New 7 Wonders</h2>
+      </div>
+      <ul class="destination-list">
+        <li>Great Wall</li>
+        <li>Petra</li>
+        <li>Colosseum</li>
+        <li>Chichen Itza</li>
+      </ul>
+      <ul class="destination-list">
+        <li>Machu Picchu</li>
+        <li>Taj Mahal</li>
+        <li>Christ Redeemer</li>
+        <li>Great Pyramid</li>
+      </ul>
+      <div class="button-container">
+        <form action="/itinerary/rJiJiWJg/copy" method="post">
+          <button class="primary fullwidth" type="submit">
+            CUSTOMIZE <i data-feather="arrow-right-circle"></i>
+          </button>
+        </form>
+      </div>
+    </section>
+    <section>
+      <div class="itinerary-image-container weird-places">
+        <h2>👻 Weird Places</h2>
+      </div>
+      <ul class="destination-list">
+        <li>Area 51</li>
+        <li>Longyearbyen</li>
+        <li>Easter Island</li>
+        <li>Loch Ness</li>
+      </ul>
+      <ul class="destination-list">
+        <li>Transylvania</li>
+        <li>Whalebone Alley</li>
+        <li>Salar de Uyuni</li>
+        <li>Door to Hell</li>
+      </ul>
+      <div class="button-container">
+        <form action="/itinerary/Qkz3ZyQS/copy" method="post">
+          <button class="primary fullwidth" type="submit">
+            CUSTOMIZE <i data-feather="arrow-right-circle"></i>
+          </button>
+        </form>
+      </div>
+    </section>
+    <section>
+      <div class="itinerary-image-container hikes">
+        <h2>🏔️ Legendary Hikes</h2>
+      </div>
+      <ul class="destination-list">
+        <li>Peru</li>
+        <li>Chile</li>
+        <li>Iceland</li>
+        <li>Switzerland</li>
+      </ul>
+      <ul class="destination-list">
+        <li>Tanzania</li>
+        <li>Nepal</li>
+        <li>New Zealand</li>
+        <li>Utah (Zion)</li>
+      </ul>
+      <div class="button-container">
+        <form action="/itinerary/6p4KUXCf/copy" method="post">
+          <button class="primary fullwidth" type="submit">
+            CUSTOMIZE <i data-feather="arrow-right-circle"></i>
+          </button>
+        </form>
+      </div>
+    </section>
+    <section>
+      <div class="itinerary-image-container oceans">
+        <h2>🌊 Ocean Sunsets</h2>
+      </div>
+      <ul class="destination-list">
+        <li>Cancun</li>
+        <li>Belize</li>
+        <li>Santorini</li>
+        <li>Phuket</li>
+      </ul>
+      <ul class="destination-list">
+        <li>Seychelles</li>
+        <li>Bali</li>
+        <li>Maui</li>
+        <li>Bora Bora</li>
+      </ul>
+      <div class="button-container">
+        <form action="/itinerary/05f2eYj8/copy" method="post">
+          <button class="primary fullwidth" type="submit">
+            CUSTOMIZE <i data-feather="arrow-right-circle"></i>
+          </button>
+        </form>
+      </div>
+    </section>
+  </article>
+</section>

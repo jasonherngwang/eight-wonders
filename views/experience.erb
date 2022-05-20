@@ -1,0 +1,11 @@
+<li class="experience">
+  <i data-feather="chevron-right" class="accent-color"></i>
+  <div>
+    <%= experience.description %>
+    <form action="/itinerary/<%= @itinerary.code %>/destinations/<%= destination.id %>/experiences/<%= experience.id %>" method="post">
+      <button class="delete-icon" type="submit">
+        <i data-feather="x-circle"></i>
+      </button>
+    </form>
+  </div>
+</li>
