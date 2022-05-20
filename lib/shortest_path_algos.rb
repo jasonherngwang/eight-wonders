@@ -579,7 +579,7 @@ end
 
 
 # p sort_longitude(coords)
-p sort_tsp_naive(coords)
+# p sort_tsp_naive(coords)
 # p sort_tsp_dp(coords)
 # time_it { sort_longitude(coords) } # => Completed in 1.1e-05 sec.
 # time_it { sort_tsp_naive(coords) } # => Completed in 0.044559 sec.

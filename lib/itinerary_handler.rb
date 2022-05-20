@@ -10,7 +10,7 @@ class ItineraryHandler
   
   # Itinerary-related methods
 
-  # Find high-level itinerary info.
+  # Find high-level itinerary info. Smaller query if we don't need all the details.
   def find_itinerary_info(code)
     sql = <<~SQL
       SELECT *

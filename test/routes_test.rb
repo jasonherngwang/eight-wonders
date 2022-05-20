@@ -57,6 +57,7 @@ class RoutingTest < Minitest::Test
     get last_response["Location"]
 
     assert_includes last_response.body, "My Adventure"
+    assert_includes last_response.body, "Itinerary itin0001 has been retrieved."
   end
 
   def test_display_itinerary
@@ -161,7 +162,7 @@ class RoutingTest < Minitest::Test
     get last_response["Location"]
 
     expected = "You've selected all 8 destinations, "\
-               "so your itinerary is complete."
+               "so your itinerary is complete!"
     assert_includes last_response.body, expected
   end
 

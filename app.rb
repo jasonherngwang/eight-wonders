@@ -46,10 +46,23 @@ end
 get "/itinerary/retrieve" do
   code = params[:code]
   
-  redirect "/" if code.empty?
-
-  # session[:success] = "Itinerary #{code} has been retrieved."
-  redirect "/itinerary/#{code}"
+  # Check for invalid input
+  error = error_for_itinerary_code_format(code)
+  if error
+    session[:error] = error
+    status 422
+    redirect "/"
+  end
+  # If input is valid, check if itinerary actually exists so we can display
+  # "retrieved" message.
+  begin
+    @itinerary_info = @itinerary_handler.find_itinerary_info(code)
+    session[:success] = "Itinerary #{code} has been retrieved."
+    redirect "/itinerary/#{code}"
+  rescue InvalidItineraryCodeError => e
+    session[:error] = e.message
+    redirect "/"
+  end
 end
 
 # Display itinerary
@@ -68,7 +81,7 @@ get "/itinerary/:code" do
     session[:error] = e.message
     redirect "/"
   end
-
+  
   erb :itinerary, layout: :layout
 end
 
