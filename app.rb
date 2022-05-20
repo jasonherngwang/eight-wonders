@@ -45,9 +45,10 @@ end
 # Retrieve existing itinerary
 get "/itinerary/retrieve" do
   code = params[:code]
+  
   redirect "/" if code.empty?
 
-  session[:success] = "Itinerary #{code} has been retrieved."
+  # session[:success] = "Itinerary #{code} has been retrieved."
   redirect "/itinerary/#{code}"
 end
 
