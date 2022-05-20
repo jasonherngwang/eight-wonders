@@ -24,15 +24,15 @@ You can start an itinerary from scratch, or customize one of our favorites such 
 
 ![Eight Wonders - Share](public/images/eight_wonders_sharing.png)
 
-### :world_map: Generates a Link to [Great Circle Mapper](http://www.gcmap.com/)
+### :world_map: Generate a Link to [Great Circle Mapper](http://www.gcmap.com/)
 
 ![Eight Wonders - GC Map](public/images/gcmap_example.jpg)
 
 ## How it Works
 
-Eight Wonders is an optional project built halfway through the [Launch School](https://launchschool.com/) Core Curriculum, Ruby track. The material covered by this point includes fundamental Ruby syntax, OOP, closures, regex, testing, application packaging, deployment, networking, databases, HTML & CSS, and problem solving. I built this project to use what I've learned to make something fun.
+Eight Wonders is an side project built halfway through the [Launch School](https://launchschool.com/) Core Curriculum, Ruby track. The material covered by this point includes fundamental Ruby syntax, OOP, closures, regex, testing, application packaging, deployment, networking, databases, HTML & CSS, and problem solving. I built this project to use what I've learned to make something fun.
 
-### :gem: Technologies Used
+### :gem: Built With:
 
 * Ruby application written with the Rack-based Sinatra framework
 * ERB view templates
@@ -44,7 +44,7 @@ Eight Wonders is an optional project built halfway through the [Launch School](h
 * ID generation with [Nano ID](https://github.com/ai/nanoid)
 * Github Action for continuous deployment to [fly.io](https://fly.io/)
 
-### :1234: Sorting Methodology
+### :1234: How Do You Find the Shortest Path?
 
 This is an example of the Traveling Salesman Problem (TSP), which asks:
 
