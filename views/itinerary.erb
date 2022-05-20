@@ -7,15 +7,15 @@
   <h1 id="itinerary-name"><%= @itinerary.name %></h1>
   <div class="itinerary-button-wrapper">
     <div class="inline-buttons">
-      <form action="/itinerary/<%= @itinerary.code %>/edit" method="get">
+      <a href="/itinerary/<%= @itinerary.code %>/edit">
         <button class="inline-button" type="submit">RENAME</button>
-      </form>
+      </a>
       <form action="/itinerary/<%= @itinerary.code %>/copy" method="post">
         <button class="inline-button" type="submit">COPY</button>
       </form>
-      <form action="/itinerary/<%= @itinerary.code %>/sharing" method="get">
-        <button class="inline-button" type="submit">SHARE</button>
-      </form>
+      <a href="/itinerary/<%= @itinerary.code %>/sharing">
+        <button class="inline-button" type="submit">SHARE ✨</button>
+      </a>
     </div>
     <form action="/itinerary/<%= @itinerary.code %>/delete" method="post" 
           onSubmit="return confirm('Are you sure you want to delete the itinerary?')">
@@ -23,7 +23,7 @@
     </form>
   </div>
   <% if @itinerary.destinations.size > 1 %>
-    <p>🗺️ Link to flight path on GC Map<a href="#gcmap-note"><sup>[1]</sup></a>:</p>
+    <p>🗺️ View flight path on GC Map<a href="#gcmap-note"><sup>[1]</sup></a>:</p>
     <a href="http://www.gcmap.com/mapui?P=<%= @itinerary.flight_path %>" target="_blank">
       <%= @itinerary.flight_path %>
     </a>

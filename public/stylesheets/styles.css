@@ -296,6 +296,10 @@ header#itinerary-info h1 {
   margin: 16px 0;
 }
 
+header#itinerary-info > a {
+  text-decoration: hsl(42deg, 40%, 50%) underline;
+}
+
 /* Section to add destinations */
 article#update-destination {
   border: 1px solid var(--brown);
@@ -710,7 +714,8 @@ button.fullwidth {
   padding: 8px 16px;
 }
 
-/* For buttons aligned side-by-side. */
+
+/* Separate Delete button from others */
 div.itinerary-button-wrapper {
   display: flex;
   flex-wrap: wrap;
@@ -720,10 +725,12 @@ div.itinerary-button-wrapper {
   gap: 16px;
 }
 
+/* For buttons aligned side-by-side. */
 div.inline-buttons {
   display: flex;
   justify-content: start;
   gap: 16px;
+  align-items: flex-start;
 }
 
 button.inline-button {
@@ -731,7 +738,7 @@ button.inline-button {
   background-color: var(--dark-green);
   border: 1px solid grey;
   font-size: 0.9rem;
-  padding: 2px 16px;
+  padding: 4px 16px;
 }
 
 button.inline-button:hover {
@@ -873,7 +880,8 @@ button.copy-itinerary:hover {
     font-size: 1.1rem;
   }
 
-  header#itinerary-info a {
+  /* Increase text size for GC Map link */
+  header#itinerary-info > a {
     font-size: 1.2rem;
   }
 
