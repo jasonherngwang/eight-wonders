@@ -59,10 +59,10 @@
     <blockquote>
       "Given a list of cities and the distances between each pair of cities, what is the shortest possible route that visits each city exactly once and returns to the origin city?"
     </blockquote>
-    <p>Eight Wonders implements the <a href="https://en.wikipedia.org/wiki/Held%E2%80%93Karp_algorithm" target="_blank"><strong>Held-Karp dynammic programming algorithm</strong></a> (iterative) to find an exact solution to the TSP. This finds the lowest-cost Hamiltonian cycle for an undirected symmetric graph. The time complexity is O(2^n*n^2). Every time the Itinerary Page is refreshed, this algorithm is executed in order to sort the destinations.</p>
-    <p>The TSP can also be solved using a brute-force approach by finding all possible travel paths and choosing the shortest one. However, this naive implementation has a time complexity of O(n!) and is impractical for large n.</p>
-    <p>For a quick approximation, we can choose a starting airport and sort the longitudes of the remaining ones. This could be inaccurate if we have three airports close in longitude, but the middle one is much farther south or north.</p>
-    <p>The Ruby implementations for all three approaches are available on <a href="https://github.com/jasonherngwang/eight-wonders/blob/main/lib/shortest_path_algos.rb" target="_blank"><strong>Github</strong></a>. Comments and corrections are welcome. Heuristic and approximation algorithms were not explored, and may be needed if we increase the number of destinations.</p>
+    <p>Eight Wonders implements the <a href="https://en.wikipedia.org/wiki/Held%E2%80%93Karp_algorithm" target="_blank"><strong>Held-Karp dynammic programming algorithm</strong></a> to find an exact solution to the TSP. Every time the Itinerary Page is refreshed, this algorithm is executed in order to sort the destinations.</p>
+    <p>The TSP can also be solved using a naive approach by considering all possible travel paths and choosing the shortest one. However, this is slow and would be impractical if we had more airports.</p>
+    <p>A faster but non-exact solution involves choosing a starting airport and sorting the longitudes of the remaining ones. This could be inaccurate if we have three airports close in longitude, but the middle one is much farther south or north.</p>
+    <p>Ruby implementations for all three approaches are available on <a href="https://github.com/jasonherngwang/eight-wonders/blob/main/lib/shortest_path_algos.rb" target="_blank"><strong>Github</strong></a>. Comments and corrections are welcome. Heuristic and approximation algorithms were not explored, and may be needed if we increase the number of destinations.</p>
   </section>
   <section>
     <h2>Can I actually book a plane ticket for my itinerary?</h2>
