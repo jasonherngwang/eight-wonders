@@ -133,7 +133,6 @@ Data Structure
 Arrays will be used to store and order data.
 Hashes will be used for lookup tables and structuring data for the output.
 
-
 Approach 1: Sort Longitudes
 ------------------------------------------
 Note: This algorithm is not an exact solution to the problem, but it is faster.
@@ -195,14 +194,17 @@ Algorithm
 - Calculate the total flight distance for each permutation.
   - Use helper method for haversine distance.
 - Select the path with the smallest distance.
-- Create and return an index mapping Hash, as required by the problem.
-
-Helper Method: Calculate the haversine (great-circle) distance.
+- Create and return an index mapping Hash. This is not part of the algorithm; 
+   it's just needed for the Eight Wonders website to operate.
 =end
 
-# Haversine Formula: Returns distance between 2 lat/lon pairs, in km or mi
-# https://community.esri.com/t5/coordinate-reference-systems-blog/distance-on-a-sphere-the-haversine-formula/ba-p/902128
-# Input: coords = [latitude, longitude]
+=begin
+Helper Method: Calculate the haversine (great-circle) distance.
+
+Haversine Formula: Returns distance between 2 lat/lon pairs, in km or mi
+https://community.esri.com/t5/coordinate-reference-systems-blog/distance-on-a-sphere-the-haversine-formula/ba-p/902128
+Input: coords = [latitude, longitude]
+=end
 
 def haversine_distance(coords1, coords2, units="km")
   earth_radius = case units
@@ -222,6 +224,8 @@ def haversine_distance(coords1, coords2, units="km")
   d = earth_radius * c
 end
 
+
+# TSP Naive Implementation
 def sort_tsp_naive(coords)
   # Pair initial index with coordinates: [0, [lat, lon]]
   coords = (0...coords.size).zip(coords)
@@ -294,8 +298,7 @@ Requirements and Clarifications
   start. Since distances are symmetric, it doesn't matter which direction we
   travel in.
 
-
-High-level Description of Algorithm
+Description of Algorithm
 ------------------------------------------
 The algorithm calculates the minimum distance for the route which:
 1. Starts at city 0
@@ -308,14 +311,14 @@ This minimum distance function is denoted g(S, e).
 
 Null Set: S = {}
 ----------------------
-We start with the null set S = {}, meaning that only traveling 1 city away.
+We start with the null set S = {}, meaning that we only travel 1 city away.
 There are 7 possible paths:
 0 -> {} -> 1 which is the same as 0 -> 1
 0 -> {} -> 2
 ...
 0 -> {} -> 7
-We calculate the distance between these city pairs and store the result in the
-DP table.
+We calculate the distance between these city pairs using the haversine formula
+and store the result in the DP table.
 
 Set Size of 1: S = {1}, {2}, ..., or {7}
 ----------------------
@@ -344,7 +347,7 @@ be created from the set:
 For each permutation, we find the distances of the paths and store the smaller
 one in our DP table. For example, we might find that:
 0 -> 1 -> 2 -> 3 has a distance of 99 (discard this result)
-0 -> 2 -> 1 -> 3 has a distance of 42 (choose this shorter one)
+0 -> 2 -> 1 -> 3 has a distance of 42 (keep this result)
 
 So in our DP table we record the following:
 { [ Set[cities],     end_city ]: [ distance,       [path] ] }
@@ -363,8 +366,9 @@ Starting from a set size of 3, the number of permutations rapidly increases.
   0 -> 3 -> 2 -> 1 -> 4
   0 -> 1 -> 3 -> 2 -> 4
   0 -> 3 -> 1 -> 2 -> 4
-  0 -> 1 -> 2 -> 3 -> 4 (pay attention to this)
-  0 -> 2 -> 1 -> 3 -> 4 (pay attention to this)
+  0 -> 1 -> 2 -> 3 -> 4 (pay attention to this; we will discuss it next)
+  0 -> 2 -> 1 -> 3 -> 4 (pay attention to this; we will discuss it next)
+...
 
 It is not necessary to perform a brute-force search through all these
 permutations to find the shortest path, as we did for the naive implementation.
@@ -377,8 +381,11 @@ last two simply add city 4 to the result of the sub-problem we already solved:
 0 -> 1 -> 2 -> 3 (this is longer)  -> 4
 0 -> 2 -> 1 -> 3 (this is shorter) -> 4
 
-This reduces the number of computations we need to perform, since we no longer
-need to consider the path 0 -> 1 -> 2 -> 3 -> 4.
+Therefore we know we don't need to consider the path 0 -> 1 -> 2 -> 3 -> 4.
+Knowing the result of sub-problems reduces the number of computations we need
+to perform. We can look up in our DP table the shortest path from 1 to 3, add 4 
+to the end, and then compare with other permutations to find the shortest path 
+from 0 to 4. Finally we can store that result in our DP table and move on.
 
 Greater Set Sizes
 ----------------------
@@ -414,7 +421,6 @@ distance required to travel home:
 The solution is the minimum travel distance out of these 7.
 Example: 0 -> 5 -> 3 -> 7 -> 6 -> 1 -> 2 -> 4 -> 0
 
-
 Algorithm
 ------------------------------------------
 - Create an n x n distance matrix containing haversine distances between cities.
@@ -446,7 +452,9 @@ Iterate through Sets of size 1 up to n-1
 The DP table is now complete.
 - Add to each path the distance to return back to city 0.
 - Find the shortest of these paths.
-- Create and return an index mapping Hash, as required by the problem.
+
+Create and return an index mapping Hash. This is not part of the Held-Karp
+algorithm; it's just needed for the Eight Wonders website to operate.
 
 Size of the DP Table for Each Set Size
 ------------------------------------------
@@ -570,9 +578,9 @@ def time_it
 end
 
 
-# p sort_longitude(coords2)
-# p sort_tsp_naive(coords2)
-# p sort_tsp_dp(coords2)
+# p sort_longitude(coords)
+p sort_tsp_naive(coords)
+# p sort_tsp_dp(coords)
 # time_it { sort_longitude(coords) } # => Completed in 1.1e-05 sec.
 # time_it { sort_tsp_naive(coords) } # => Completed in 0.044559 sec.
 # time_it { sort_tsp_dp(coords) }    # => Completed in 0.006426 sec.
