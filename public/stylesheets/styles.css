@@ -641,6 +641,7 @@ article#faq img {
 /* === FOOTER === */
 p.footnote {
   font-size: 0.8rem;
+  color: hsl(195deg, 4%, 50%);
 }
 
 footer {
