@@ -14,7 +14,7 @@
         <button class="inline-button" type="submit">COPY</button>
       </form>
       <a href="/itinerary/<%= @itinerary.code %>/sharing">
-        <button class="inline-button" type="submit">SHARE ✨</button>
+        <button class="inline-button" type="submit">SHARE✨</button>
       </a>
     </div>
     <form action="/itinerary/<%= @itinerary.code %>/delete" method="post" 
@@ -77,4 +77,4 @@
              complete: @itinerary.destinations.size == 8 } %>
   <% end %>
 </ul>
-<p id="gcmap-note" class="footnote">[1] Discrepancies between the OurAirports and GC Map data could yield an incorrect flight map. GC Map may be unable to find an IATA code or have it referencing a different airport. To fix, swap with a nearby airport.</p>
+<p id="gcmap-note" class="footnote">[1] Discrepancies between the OurAirports and GC Map data could yield an incorrect flight map. GC Map may be unable to find an IATA code or have it referencing a different airport. To fix, select a different airport.</p>
