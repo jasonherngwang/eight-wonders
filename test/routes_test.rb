@@ -115,6 +115,25 @@ class RoutingTest < Minitest::Test
     assert_includes last_response.body, expected
   end
 
+  def test_copy_itinerary
+    get "/itinerary/itin0001/copy"
+
+    assert_equal 302, last_response.status
+    get last_response["Location"]
+
+    refute_includes last_response.body, "ITINERARY CODE: itin0001"
+  end
+
+  def test_share_itinerary
+    get "/itinerary/itin0001/sharing"
+
+    assert_equal 200, last_response.status
+
+    assert_includes last_response.body, "Take a Screenshot"
+    assert_includes last_response.body, "itin0001"
+    assert_includes last_response.body, "Los Angeles"
+  end
+
   def test_add_destination
     post "/itinerary/itin0001/destinations", { iata: "HKG" }
 
@@ -166,15 +185,6 @@ class RoutingTest < Minitest::Test
     assert_includes last_response.body, expected
   end
 
-  def test_copy_itinerary
-    post "/itinerary/itin0001/copy"
-
-    assert_equal 302, last_response.status
-    get last_response["Location"]
-
-    refute_includes last_response.body, "ITINERARY CODE: itin0001"
-  end
-
   def test_add_experience
     post "/itinerary/itin0001/destinations/1/experiences",
          { text: "Relax on the beach." }
@@ -202,6 +212,14 @@ class RoutingTest < Minitest::Test
     get last_response["Location"]
 
     assert_includes last_response.body, "The experience has been deleted."
+  end
+
+  def test_faq
+    get "/faq"
+
+    assert_equal 200, last_response.status
+
+    assert_includes last_response.body, "Frequently Asked Questions"
   end
   
   def test_sort_tsp_dp
