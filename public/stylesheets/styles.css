@@ -29,7 +29,7 @@ body {
 
 main {
   flex: 1 0 auto; /* Consume space between header and footer, so footer stays at bottom. */
-  margin-bottom: 32px;
+  margin-bottom: 40px;
 }
 
 a {
@@ -106,6 +106,7 @@ header#hero figure.hero-image-mobile {
 
 header#hero figure.hero-image-mobile img {
   height: 100%;
+  max-height: 764px;
   object-fit: cover;
 }
 
@@ -682,7 +683,7 @@ button.primary {
   color: white;
   background-color: var(--brown);
   border: none;
-  box-shadow: 2px 3px 5px hsla(0deg, 0%, 10%);
+  box-shadow: 1px 2px 3px hsla(0deg, 0%, 10%);
 }
 
 button.primary:hover {
