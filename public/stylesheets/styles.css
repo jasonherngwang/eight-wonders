@@ -1,0 +1,988 @@
+/* Variables */
+:root {
+  --dark-green: hsl(136deg 28% 16%); /* Dark green */
+  --light-green: hsl(174deg, 13%, 29%); /* Pale green */
+  --brown: hsl(29deg, 47%, 42%); /* Medium brown */
+  --light-brown: hsl(29deg, 47%, 45%); /* Lighter medium brown */
+  --gold: hsl(42deg, 74%, 77%); /* Gold */
+  --red: hsl(0deg 100% 40%); /* Pale red for delete buttons */
+}
+
+
+/* === GLOBAL SETTINGS === */
+html {
+  background-color: var(--dark-green);
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-width: 300px;
+  max-width: 1020px;
+  margin: 0 auto;
+  padding: 0 8px 0 8px; /* Minimal side padding for mobile. */
+  font-family: "Work Sans", Helvetica, Arial, sans-serif;
+  font-weight: normal;
+  font-size: 16px;
+  color: white;
+}
+
+main {
+  flex: 1 0 auto; /* Consume space between header and footer, so footer stays at bottom. */
+  margin-bottom: 32px;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+}
+
+a:hover {
+  color: var(--gold);
+  cursor: pointer;
+}
+
+.accent-color {
+  color: var(--gold);
+}
+
+
+/* === NAVBAR === */
+nav {
+  flex-shrink: 0; /* Prevent vertical shrinkage. */
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  height: 50px;
+  font-size: 1rem;
+  color: white;
+  border-bottom: 1px solid var(--light-green);
+}
+
+nav div {
+  display: flex; /* Flex is used to vertically center contents. */
+  align-items: center;
+  height: 100%;
+}
+
+nav #logo a {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--gold);
+}
+
+nav #nav-links li {
+  font-weight: 500;
+}
+
+
+/* === HOME PAGE === */
+/*
+   Home Page - Hero Area
+   - Mobile: Displays text on top of image.
+   - Wider breakpoints: Displays text and image side-by-side.
+*/
+
+header#hero {
+  flex-shrink: 0;
+  min-width: 320px;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-areas: "hero";
+  margin-bottom: 32px;
+  overflow: hidden;
+  height: 580px;
+}
+
+/* Figure is hidden until a wider breakpoint. */
+header#hero figure.hero-image {
+  display: none;
+}
+
+/* Figure is displayed on mobile. */
+header#hero figure.hero-image-mobile {
+  grid-area: hero;
+}
+
+header#hero figure.hero-image-mobile img {
+  height: 100%;
+  object-fit: cover;
+}
+
+/* On mobile, text overlaps image. */
+header#hero section {
+  grid-area: hero;
+  padding: 0 16px;
+}
+
+/* Text above main header */
+header#hero section > p {
+  margin: 120px 0 16px;
+  font-weight: 500;
+  text-shadow: 0.5px 0.5px 2px black;
+}
+
+/* Main header text */
+header#hero h1 {
+  font-family: "Lora", "Times", "Times New Roman", serif;
+  font-size: 2.25rem;
+  font-style: italic;
+  color: var(--gold);
+  text-shadow: 1px 1px 2px black; /* Constrast against photo background */
+}
+
+/* Subheading */
+header#hero h1 span {
+  color: white;
+}
+
+/* Instructions for user */
+header#hero div#instructions {
+  margin: 24px 0 32px;
+}
+
+/* Margin for itinerary buttons */
+header#hero form {
+  margin-bottom: 16px;
+}
+
+header#hero form#retrieve-itinerary input {
+  padding: 4px 8px;
+}
+
+/* Home Page - Favorite Itineraries */
+
+section#favorite-itineraries > h2 {
+  color: var(--gold);
+  margin: 24px 16px;
+  text-align: center;
+}
+
+/* Itinerary Cards for Favorite Itineraries */
+article#itinerary-cards {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 48px; /* Spacing between the cards and the footer. */
+}
+
+/*
+Cards have min width of 300px and are allowed to expand to full screen width.
+300px is never reached unless the screen is very small.
+The widest that a single card can be is about 900px, when it occupies its own row.
+*/
+article#itinerary-cards > section {
+  flex: 1 0 300px;
+  border: 1px solid var(--brown);
+  display: grid;
+  grid-template-columns: 50% 50%; /* Country names are listed in 2 columns. */
+  grid-template-rows: 250px 2fr 72px; /* 72px = button height + 32 padding */
+  grid-template-areas:
+    "image image"
+    "list1 list2"
+    "button button"
+}
+
+/*
+A linear gradient is layered on top of background images, to provide contrast for white text.
+*/
+article#itinerary-cards div.michelin {
+  background: linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.75) 0%,
+      rgba(0, 0, 0, 0.15) 40%,
+      rgba(0, 0, 0, 0) 100%
+    ),
+    url(/images/itinerary_michelin.jpg);
+}
+
+article#itinerary-cards div.oceans {
+  background: linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.75) 0%,
+      rgba(0, 0, 0, 0.15) 40%,
+      rgba(0, 0, 0, 0) 100%
+    ),
+    url(/images/itinerary_oceans.jpg);
+}
+
+article#itinerary-cards div.hikes {
+  background: linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.75) 0%,
+      rgba(0, 0, 0, 0.15) 40%,
+      rgba(0, 0, 0, 0) 100%
+    ),
+    url(/images/itinerary_hikes.jpg);
+}
+
+article#itinerary-cards div.weird-places {
+  background: linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.75) 0%,
+      rgba(0, 0, 0, 0.15) 40%,
+      rgba(0, 0, 0, 0) 100%
+    ),
+    url(/images/itinerary_weird_places.jpg);
+}
+
+article#itinerary-cards div.wonders {
+  background: linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.75) 0%,
+      rgba(0, 0, 0, 0.15) 40%,
+      rgba(0, 0, 0, 0) 100%
+    ),
+    url(/images/itinerary_wonders.jpg);
+}
+
+article#itinerary-cards div.festivals {
+  background: linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.75) 0%,
+      rgba(0, 0, 0, 0.15) 40%,
+      rgba(0, 0, 0, 0) 100%
+    ),
+    url(/images/itinerary_festivals.jpg);
+}
+
+article#itinerary-cards div.itinerary-image-container {
+  grid-area: image;
+  display: flex;
+  padding: 8px 16px;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+article#itinerary-cards h2 {
+  align-self: flex-end; /* Vertically align the card title to the bottom. */
+  font-family: "Lora", "Times", "Times New Roman", serif;
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+article#itinerary-cards ul.destination-list {
+  font-size: 1rem;
+  padding: 16px;
+}
+
+article#itinerary-cards section > ul.destination-list:nth-child(2) {
+  grid-area: list1;
+}
+article#itinerary-cards section > ul.destination-list:nth-child(3) {
+  grid-area: list2;
+  padding-left: 0;
+}
+
+article#itinerary-cards div.button-container {
+  grid-area: button;
+  padding: 16px;
+}
+
+/* === ITINERARY PAGE === */
+/* Header section with itinerary info */
+header#itinerary-info {
+  margin: 32px 0 16px 0;
+}
+
+header#itinerary-info h1 {
+  font-family: "Lora", "Times", "Times New Roman", serif;
+  font-size: 1.6rem;
+  font-style: italic;
+  color: var(--gold);
+  margin: 16px 0;
+}
+
+/* Section to add destinations */
+article#update-destination {
+  border: 1px solid var(--brown);
+  border-radius: 4px;
+  padding: 16px;
+  margin: 24px 0;
+}
+
+section#add-destination {
+  border-top: 1px solid var(--light-green);
+  padding: 16px 0;
+  margin-top: 16px;
+}
+
+section#add-destination .autoComplete_wrapper {
+  margin-bottom: 8px;
+}
+
+section#randomize-destination {
+  /* border-top: 1px solid var(--light-green); */
+  padding: 16px 0 0;
+}
+
+section#randomize-destination p {
+  margin-bottom: 8px;
+}
+
+/* Edit itinerary name form */
+section#edit-itinerary-name h1 {
+  font-family: "Lora", "Times", "Times New Roman", serif;
+  font-size: 1.7rem;
+  font-style: italic;
+  color: var(--gold);
+  margin: 32px 0 16px;
+}
+
+section#edit-itinerary-name input {
+  width: 100%;
+  max-width: 600px;
+  padding: 4px 8px;
+}
+
+section#edit-itinerary-name dd:last-child {
+  margin-top: 16px;
+}
+
+
+/* === ITINERARY PAGE - DESTINATION CARDS === */
+li.destination-card {
+  padding: 16px 0; 
+  margin: 0 0 16px;
+  border-top: 1px solid var(--light-green);
+}
+
+li.destination-card div.banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 0.9rem;
+  margin-bottom: 12px;
+}
+
+li.destination-card div.badge {
+  flex: 0 0 auto;
+  display: flex;
+  width: 30px;
+  height: 30px;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid var(--light-green);
+  border-radius: 100%;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+li.destination-card div.itinerary-complete {
+  border-color: var(--gold);
+}
+
+li.destination-card h1 {
+  font-size: 1.3rem;
+  /* font-weight: 500; */
+  color: var(--gold);
+}
+
+li.destination-card ul {
+  margin-bottom: 16px;
+}
+
+/* Add Experience */
+div#experiences {
+  margin: 16px 0 24px;
+}
+
+div#experiences dd {
+  display: flex;
+  max-width: 500px;
+  gap: 8px;
+}
+
+/* Add Experience input field */
+div#experiences dd input {
+  flex: 1;
+  border-radius: 3px;
+  border: 1px solid grey;
+  padding: 4px 0 4px 10px;
+  /* background-color: hsl(136deg 28% 95%); */
+}
+
+
+/* Individual Experiences */
+li.experience {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  margin-bottom: 8px;
+  font-family: "Lora", "Times", "Times New Roman", serif;
+  font-style: italic;
+}
+
+/* Prevent square icon from being squeezed./ */
+li.experience svg {
+  flex-shrink: 0;
+}
+
+/* Convert form from block to inline, so delete icon can be placed after last word. */
+li.experience form {
+  display: inline;
+}
+
+/* Move chevron icon down by 4px so it is centered with first line of text. */
+li.experience svg {
+  width: 1rem;
+  height: 1rem;
+  position: relative;
+  top: 4px;
+}
+li.experience button > svg {
+  top: 3px;
+}
+
+/* Clear default button formatting, so icon alone serves as the button. */
+li.experience button.delete-icon {
+  background: none;
+	color: inherit;
+	border: none;
+	padding: 0;
+}
+
+li.experience button.delete-icon svg:hover {
+  color: var(--red);
+}
+
+/* === ITINERARY PAGE - SOCIAL MEDIA SHARING === */
+article#sharing .corner-icon {
+  position: absolute;
+  font-size: 2rem;
+  text-shadow: 0.25px 0.25px 2px black;
+}
+
+article#sharing .top-left {
+  top: 4px;
+  left: 8px;
+}
+
+article#sharing .top-right {
+  top: 4px;
+  right: 8px;
+}
+
+article#sharing {
+  padding: 32px 0;
+}
+
+article#sharing h1 {
+  font-size: 2rem;
+  margin-bottom: 24px;
+}
+
+article#sharing h2 {
+  font-family: "Lora", "Times", "Times New Roman", serif;
+  font-size: 1.4rem;
+  font-style: italic;
+  color: var(--gold);
+  margin: 0 0 16px;
+}
+
+article#sharing svg {
+  display: inline;
+}
+
+div#sharing-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: start;
+  gap: 24px;
+}
+
+section#sharing-card {
+  flex-shrink: 0;
+  position: relative;
+  width: 320px;
+  height: 400px;
+  padding: 16px 16px 40px;
+  margin-bottom: 24px;
+  border: 1px solid var(--gold);
+  border-radius: 4px;
+}
+
+section#sharing-card img {
+  width: 100%;
+  object-fit: fill;
+}
+
+section#sharing-card div#city-names {
+  position: absolute;
+  width: 286px;
+  height: 320px;
+  top: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+section#sharing-card p.city-name {
+  flex: 1;
+  font-size: 1.2rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+  text-shadow: 0.25px 0.5px 2px black;
+  text-align: center;
+}
+
+section#sharing-card div#card-caption {
+  display: flex;
+  justify-content: space-between;
+}
+
+section#sharing-card div#card-caption p {
+  /* color: var(--gold); */
+  font-weight: 500;
+  padding-top: 4px;
+}
+
+section#sharing-card div#card-caption p:nth-child(2) {
+  font-size: 0.9rem;
+}
+
+div#sharing-container figure {
+  flex: 1;
+  width: 100%;
+  min-width: 320px;
+  max-width: 600px;
+  padding: 0 16px;
+}
+
+div#sharing-container figure img {
+  width: 100%;
+}
+
+/* === FAQ === */
+article#faq {
+  padding: 32px 0;
+}
+
+article#faq section {
+  margin-bottom: 32px;
+}
+
+article#faq h1 {
+  font-size: 2rem;
+  margin-bottom: 24px;
+}
+
+article#faq h2 {
+  font-family: "Lora", "Times", "Times New Roman", serif;
+  font-size: 1.4rem;
+  font-style: italic;
+  color: var(--gold);
+  margin: 0 0 16px;
+}
+
+article#faq h3 {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+article#faq p {
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+
+article#faq ul {
+  padding-left: 1em;
+  list-style: disc;
+  list-style-position: outside;
+}
+
+article#faq li {
+  line-height: 1.75;
+}
+
+/* Format bullet point color */
+article#faq li::marker {
+  color: var(--gold);
+}
+
+article#faq blockquote {
+  margin: 24px 0;
+}
+
+article#faq blockquote {
+  background-color: var(--light-green);
+  padding: 16px;
+  border-left: 4px solid var(--gold);
+  border-radius: 3px;
+}
+
+article#faq figure {
+  display: none;
+  width: 100%;
+  max-width: 42%;
+  float: right;
+  padding-left: 16px;
+}
+
+article#faq figcaption {
+  font-family: "Lora", "Times", "Times New Roman", serif;
+  font-size: 0.95rem;
+  font-style: italic;
+  text-align: right;
+  padding-right: 8px;
+}
+
+article#faq img {
+  min-width: 350px;
+  width: 100%;
+}
+
+
+/* === FOOTER === */
+p.footnote {
+  font-size: 0.8rem;
+}
+
+footer {
+  flex-shrink: 0; /* Prevent vertical shrinkage. */
+  width: 100%;
+  padding: 16px 0 16px 0;
+  font-size: 0.8rem;
+  color: hsl(195deg, 4%, 50%);
+  border-top: 1px solid var(--light-green);
+}
+
+footer p:first-child {
+  font-weight: 500;
+}
+
+
+/* === BUTTONS === */
+button {
+  font-weight: 500;
+  border-radius: 3px;
+}
+
+/* Arrow icon sizing */
+button > svg {
+  width: 20px;
+  height: 20px;
+}
+button:hover {
+  cursor: pointer;
+}
+
+button.primary {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  color: white;
+  background-color: var(--brown);
+  border: none;
+  box-shadow: 2px 3px 5px hsla(0deg, 0%, 10%);
+}
+
+button.primary:hover {
+  background-color: var(--light-brown);
+}
+
+/* Magenta button for Randomize Itinerary */
+button.bright {
+  background-color: hsla(320deg, 84%, 33%);
+}
+
+button.bright:hover {
+  background-color: hsla(320deg, 80%, 40%);
+}
+
+/* Compact-width button */
+button.hero {
+  font-size: 1.1rem;
+  padding: 8px 16px;
+}
+
+button.fullwidth {
+  width: 100%;
+  padding: 8px 16px;
+}
+
+/* For buttons aligned side-by-side. */
+div.itinerary-button-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin: 32px 0;
+  gap: 16px;
+}
+
+div.inline-buttons {
+  display: flex;
+  justify-content: start;
+  gap: 16px;
+}
+
+button.inline-button {
+  color: white;
+  background-color: var(--dark-green);
+  border: 1px solid grey;
+  font-size: 0.9rem;
+  padding: 2px 16px;
+}
+
+button.inline-button:hover {
+  background-color: var(--light-green);
+}
+
+button.delete:hover {
+  background-color: var(--red);
+}
+
+button.copy-itinerary {
+  color: white;
+  background-color: var(--dark-green);
+  border: none;
+  padding: 0;
+}
+
+button.copy-itinerary > svg {
+  width: 16px;
+  height: 16px;
+  display: inline;
+}
+button.copy-itinerary:hover {
+  color: var(--gold);
+}
+
+/* === FLASH MESSAGES === */
+.flash {
+  position: absolute;
+  top: 80px;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  max-width: min(90%, 600px);
+  padding: 10px 20px;
+  background: var(--light-green);
+  border-radius: 3px;
+  animation: fadeinout 3.5s linear forwards; /* Fade in and out */
+}
+
+@keyframes fadeinout {
+  0% { opacity: 0; transform: translateY(-10px); }
+  5% { opacity: 1; transform: translateY(0px); }
+  95% { opacity: 1; transform: translateY(0px); }
+  100% { opacity: 0; transform: translateY(-10px) }
+}
+
+.flash p {
+  font-size: 0.9rem;
+  font-weight: bold; 
+}
+
+.flash.error {
+  color: #f45520;
+  background: #FFCFBF; 
+}
+
+.flash.success {
+  color: #23a278;
+  background: #CBF2E5; 
+}
+
+
+/* === MEDIA QUERIES === */
+@media screen and (min-width: 600px) {
+  /* Global */
+  body {
+    padding: 0 24px 0 24px;
+  }
+  
+  /* Navbar */
+  /* Increase navbar height and text size. */
+  nav {
+    height: 70px;
+  }
+  nav #logo a {
+    font-size: 1.5rem;
+  }
+  nav #nav-links li {
+    font-size: 1.2rem;
+  }
+
+  /* Home Page */
+  /* Header image and text section can now be placed side-by-side using Grid. */
+  header#hero {
+    grid-template-columns: 1fr 2fr;
+    grid-template-areas: "hero-image hero-text";
+    margin: 32px 0;
+    height: 500px;
+  }
+  /* Hide mobile image, and show original image. */
+  header#hero figure.hero-image-mobile {
+    display: none;
+  }
+  header#hero figure.hero-image {
+    display: block;
+    grid-area: hero-image;
+  }
+  header#hero figure.hero-image img {
+    height: 100%;
+    object-fit: cover;
+  }
+  header#hero section {
+    grid-area: hero-text;
+    padding: 0 24px;
+  }
+  header#hero section > p {
+    margin: 24px 0 16px 0;
+    font-size: 1.2rem;
+    text-shadow: none;
+  }  
+  header#hero h1 {
+    font-size: 2.5rem;
+    text-shadow: none;
+  }
+  header#hero div#instructions {
+    margin: 32px 0;
+  }
+
+  /* Home Page - Favorite Itineraries */
+  section#favorite-itineraries {
+    border-top: 1px solid var(--light-green);
+  }
+  section#favorite-itineraries > h2 {
+    font-size: 1.4rem;
+    margin: 40px 16px 32px;
+  }
+
+  /* Itinerary Page */
+  header#itinerary-info h1 {
+    font-size: 2rem;
+  }
+
+  header#itinerary-info span {
+    font-size: 1.1rem;
+  }
+
+  header#itinerary-info a {
+    font-size: 1.2rem;
+  }
+
+  /* Itinerary Page - Destination Cards */
+  li.destination-card {
+    margin: 0 0 24px;
+  }
+  li.destination-card h1 {
+    font-size: 1.5rem;
+  }
+  li.experience {
+    font-size: 1.1rem;
+  }
+  li.destination-card div.badge {
+    width: 40px;
+    height: 40px;
+    font-size: 1.3rem;
+  }
+
+  /* FAQ */
+  article#faq section {
+    margin-bottom: 40px;
+  }
+  article#faq h1 {
+    font-size: 2.5rem;
+  }
+  article#faq h2 {
+    font-size: 1.7rem;
+  }
+  article#faq h3 {
+    font-size: 1.1rem;
+  }
+  article#faq {
+    font-size: 1.2rem;
+  }
+}
+
+@media screen and (min-width: 800px) {
+  /* Home Page */
+  header#hero {
+    height: 550px;
+  }
+  header#hero h1 {
+    font-size: 3.3rem;
+  }
+  header#hero div#instructions {
+    font-size: 1.2rem;
+    margin: 40px 0;
+  }
+
+  /* Itinerary Page */
+  header#itinerary-info h1 {
+    font-size: 2.5rem;
+  }
+  article#update-destination {
+    font-size: 1.2rem;
+    margin-bottom: 40px;
+  }
+
+  /* Itinerary Page - Destination Cards */
+  li.destination-card {
+    margin: 0 0 32px;
+  }
+  li.destination-card h1 {
+    font-size: 1.8rem;
+  }
+  li.destination-card > p {
+    font-size: 1.1rem;
+  }
+  li.destination-card ul {
+    margin-bottom: 24px;
+  }
+  div.destination-name p {
+    font-size: 1.1rem;
+  }
+  li.experience {
+    font-size: 1.2rem;
+    margin-bottom: 16px;
+  }
+  li.experience svg {
+    width: 1.3rem;
+    height: 1.3rem;
+  }
+  li.experience button > svg {
+    top: 4px;
+  }
+  li.destination-card div.badge {
+    width: 50px;
+    height: 50px;
+    font-size: 1.5rem;
+  }
+
+  /* FAQ */
+  article#faq figure {
+    display: block;
+  }
+}
+
+@media screen and (min-width: 1020px) {
+  /* Home Page */
+  header#hero > section {
+    padding: 0 40px;
+  }
+  header#hero > section > p {
+    font-size: 1.5rem;
+  }  
+  header#hero h1 {
+    font-size: 4.2rem;
+  }
+
+  /* Itinerary Page */
+  header#itinerary-info h1 {
+    font-size: 2.9rem;
+  }
+}
+
