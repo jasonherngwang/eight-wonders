@@ -4,8 +4,11 @@ https://eight-wonders.fly.dev/
 
 **Eight Wonders** is a flight path optimizer which calculates the shortest path connecting up to 8 airports, anywhere in the world.
 
-Have you ever dreamt about flying around the world to visit your bucket list destinations? We'll help you create an itinerary that minimizes time spent on the plane.
-You can start an itinerary from scratch, or customize one of our favorites such as *Michelin Star Dining* or *Festivals!*. All you have to do is select 8 airport codes, and we'll automatically sort the airports in the optimal flight order. You can also make notes on the attractions you want to see at each place. Bon voyage! :airplane:
+Have you ever wanted to fly around the world to visit your bucket list destinations? We'll help you create an itinerary that minimizes time spent on the plane. You can start an itinerary from scratch or customize one of our favorites such as *Michelin Star Dining* or *Festivals!*. Select up to 8 airports, and we'll automatically sort them in the optimal flight order. You can also make notes on the attractions you want to see at each place. Bon voyage! :airplane:
+
+### Why Eight?
+
+The idea is that you can visit the [Seven Wonders of the World](https://en.wikipedia.org/wiki/Wonders_of_the_World), and whichever you consider to be the Eighth Wonder!
 
 ![Eight Wonders Home Page](public/images/eight_wonders_homepage.png)
 
