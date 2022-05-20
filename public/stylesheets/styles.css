@@ -834,6 +834,8 @@ button.copy-itinerary:hover {
   }
   header#hero figure.hero-image img {
     height: 100%;
+    max-height: 550px;
+    max-width: 302px;
     object-fit: cover;
   }
   header#hero section {
