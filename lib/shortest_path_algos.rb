@@ -145,11 +145,12 @@ directly sort them until they are normalized.
 
 Algorithm
 ------------------------------------------
+- Normalize the values by add 360 degrees to all negative longitude values.
+  This will make all values positive and fall in the range [0, 360].
 - Subtract the longitude of the starting airport from all longitude values,
   including itself. This sets the starting airport to 0 degrees.
-- Add 360 degrees to all negative longitude values. This will make all values
-  positive and fall in the range [0, 360]. Now the starting airport is 0 deg,
-  and all other airports are greater than it.
+- Normalize the values again by adding 360 to negative values. Now the starting 
+  airport is 0 deg, and all other airports are greater than it.
 - Sort in ascending order by this normalized longitude.
 - Store and return the initial and sorted indices in a Hash. Create and return 
   this index mapping Hash, as required by the problem.
@@ -158,9 +159,11 @@ Algorithm
 def sort_longitude(coords)
   # Extract longitudes out of coordinate lat/lon pairs.
   longitudes = coords.map { |c| c[1] }
+  # Normalize: Add 360 degrees to all negative longitudes.
+  normalized_lon = longitudes.map { |lon| lon < 0 ? lon + 360 : lon }
   # Subtract starting airport's longitude from all.
-  shifted_lon = longitudes.map { |lon| lon - longitudes.first }
-  # Add 360 degrees to all negative longitudes.
+  shifted_lon = normalized_lon.map { |lon| lon - normalized_lon.first }
+  # Normalize again to [0, 360].
   normalized_lon = shifted_lon.map { |lon| lon < 0 ? lon + 360 : lon }
   # Pair original index with normalized longitude, 
   # each as a 2-element Array: [idx, lon].
