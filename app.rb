@@ -76,7 +76,8 @@ get "/itinerary/:code" do
       redirect "/"
     end
     # Available algorithms: :longitude, :tsp_naive, :tsp_dp
-    @itinerary.sort_destinations!(:tsp_dp)
+    # @itinerary.sort_destinations!(:tsp_dp)
+    @itinerary.sort_destinations!(:longitude)
   rescue InvalidItineraryCodeError => e
     session[:error] = e.message
     redirect "/"
