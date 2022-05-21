@@ -1,5 +1,5 @@
 const autoCompleteJS = new autoComplete({
-  placeHolder: "Search by airport code or city",
+  placeHolder: "Enter airport code, name, or city",
   diacritics: true,
   resultsList: {
     noResults: true,

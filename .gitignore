@@ -59,3 +59,4 @@ build-iPhoneSimulator/
 .tool-versions
 .env
 .rubocop.yml
+/blog/

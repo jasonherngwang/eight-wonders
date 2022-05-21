@@ -305,7 +305,7 @@ article#update-destination {
   border: 1px solid var(--brown);
   border-radius: 4px;
   padding: 16px;
-  margin: 24px 0;
+  margin: 24px 0 32px;
 }
 
 section#add-destination {
@@ -325,6 +325,10 @@ section#randomize-destination {
 
 section#randomize-destination p {
   margin-bottom: 8px;
+}
+
+ul#destinations {
+  margin-top: 16px;
 }
 
 /* Edit itinerary name form */

@@ -36,7 +36,7 @@
       <form action="/itinerary/<%= @itinerary.code %>/destinations" method="post">
         <dl>
           <dt>
-            <label for="airport-search">Add an airport</label>
+            <label for="airport-search">Search for an airport:</label>
           </dt>
           <dd>
             <div class="autoComplete_wrapper">
@@ -70,11 +70,12 @@
     </p>
   <% end %>
 </article>
+<p>👉 Click on any airport name to view it on Google Maps.</p>
 <ul id="destinations">
   <% @itinerary.destinations.each_with_index do |destination, idx| %>
     <%== erb :"destination_card", layout: nil, 
              locals: { destination: destination, order: idx + 1, 
-             complete: @itinerary.destinations.size == 8 } %>
+                       complete: @itinerary.destinations.size == 8 } %>
   <% end %>
 </ul>
 <p id="gcmap-note" class="footnote">[1] Discrepancies between the OurAirports and GC Map data could yield an incorrect flight map. GC Map may be unable to find an IATA code or have it referencing a different airport. To fix, select a different airport.</p>
