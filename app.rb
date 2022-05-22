@@ -6,6 +6,7 @@ require "nanoid"
 
 require_relative "lib/itinerary_handler"
 require_relative "lib/helpers"
+require_relative "lib/shortest_path_algos"
 
 # Configuration and Reloading
 configure do
@@ -75,9 +76,13 @@ get "/itinerary/:code" do
       session[:error] = "That itinerary is not editable."
       redirect "/"
     end
-    # Available algorithms: :longitude, :tsp_naive, :tsp_dp
-    # @itinerary.sort_destinations!(:tsp_dp)
-    @itinerary.sort_destinations!(:longitude)
+    # Available algorithms: sort_longitude, sort_tsp_naive, sort_tsp_dp
+    @itinerary.sort_destinations! do |coords|
+      sort_tsp_dp(coords)
+      # sort_tsp_naive(coords)
+      # sort_longitude(coords)
+    end
+
   rescue InvalidItineraryCodeError => e
     session[:error] = e.message
     redirect "/"

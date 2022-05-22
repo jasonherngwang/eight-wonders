@@ -1,4 +1,4 @@
-require_relative "shortest_path_algos"
+# require_relative "shortest_path_algos"
 
 class Itinerary
   attr_reader :id, :code, :name, :editable, :destinations
@@ -11,22 +11,16 @@ class Itinerary
     @destinations = destinations
   end
 
-  def sort_destinations!(algorithm=:tsp_dp)
+  def sort_destinations!
     # Destination 1 is fixed, so only sort when we have 3+ destinations.
-    return if @destinations.size <= 2 || !algorithm
+    return if @destinations.size <= 2 || !block_given?
 
     coords = @destinations.map { |d| [d.latitude, d.longitude] }
-    idx_mapping = case algorithm
-                  when :tsp_dp    then sort_tsp_dp(coords)
-                  when :tsp_naive then sort_tsp_naive(coords)
-                  when :longitude then sort_longitude(coords)
-                  end
+    idx_mapping = yield(coords)
     
-    # p @destinations.map { |d| d.iata_code }
     @destinations.sort_by! do |d|
       idx_mapping[@destinations.index(d)]
     end
-    # p @destinations.map { |d| d.iata_code }
   end
 
   # Returns a hyphen-separated path used for querying gcmap.com
