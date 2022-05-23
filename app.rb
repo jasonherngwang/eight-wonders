@@ -132,12 +132,18 @@ end
 post "/itinerary/:code/destinations" do
   code = validate_itinerary_code(params[:code])
   iata = params[:iata].strip.upcase
-  
-  begin
-    @itinerary_handler.add_destination(code, iata)
-    session[:success] = "Airport #{iata} has been added to your itinerary."
-  rescue InvalidIataCodeError, DuplicateIataCodeError => e
-    session[:error] = e.message
+
+  error = error_for_iata_format(iata)
+  if error
+    session[:error] = error
+    status 422
+  else
+    begin
+      @itinerary_handler.add_destination(code, iata)
+      session[:success] = "Airport #{iata} has been added to your itinerary."
+    rescue InvalidIataCodeError, DuplicateIataCodeError => e
+      session[:error] = e.message
+    end
   end
 
   redirect "/itinerary/#{code}"
