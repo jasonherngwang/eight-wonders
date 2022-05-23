@@ -73,7 +73,7 @@
 <p>👉 Click on any airport name to view it on Google Maps.</p>
 <ul id="destinations">
   <% @itinerary.destinations.each_with_index do |destination, idx| %>
-    <%== erb :"destination_card", layout: nil, 
+    <%== erb :"destination_card", layout: false, 
              locals: { destination: destination,
                        order: idx + 1, 
                        complete: @itinerary.destinations.size == 8 } %>

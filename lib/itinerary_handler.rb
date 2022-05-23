@@ -58,17 +58,17 @@ class ItineraryHandler
              a.municipality,
              a.latitude,
              a.longitude,
-             att.id          AS experience_id,
-             att.description AS experience
+             e.id            AS experience_id,
+             e.description   AS experience
         FROM itineraries i
         LEFT JOIN destinations d
           ON i.id = d.itinerary_id
         LEFT JOIN airports a
           ON a.id = d.airport_id
-        LEFT JOIN experiences att
-          ON d.id = att.destination_id
+        LEFT JOIN experiences e
+          ON d.id = e.destination_id
        WHERE i.code = $1
-       GROUP BY i.id, d.id, a.id, att.id;
+       GROUP BY i.id, d.id, a.id, e.id;
     SQL
     result = query(sql, code)
 

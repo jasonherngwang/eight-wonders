@@ -16,7 +16,7 @@
   </div>
   <ul>
     <% destination.experiences.each do |experience| %>
-      <%== erb :"experience", layout: nil, 
+      <%== erb :"experience", layout: false, 
                locals: { destination: destination, experience: experience } %>
     <% end %>
   </ul>
