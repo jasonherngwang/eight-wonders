@@ -1,5 +1,6 @@
 require_relative "database_connection"
 require_relative "itinerary"
+require_relative "shortest_path_algos"
 
 class InvalidItineraryCodeError < StandardError; end
 class InvalidIataCodeError < StandardError; end
@@ -67,8 +68,7 @@ class ItineraryHandler
           ON a.id = d.airport_id
         LEFT JOIN experiences e
           ON d.id = e.destination_id
-       WHERE i.code = $1
-       GROUP BY i.id, d.id, a.id, e.id;
+       WHERE i.code = $1;
     SQL
     result = query(sql, code)
 
@@ -112,6 +112,9 @@ class ItineraryHandler
     create_itinerary(new_code)
 
     current_itinerary = find_itinerary_by_code(code)
+    current_itinerary.sort_destinations! do |coords|
+      sort_tsp_dp(coords)
+    end
     # Copy destinations to new itinerary
     current_itinerary.destinations.each do |destination|
       add_destination(new_code, destination.iata_code)
