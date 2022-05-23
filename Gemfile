@@ -10,6 +10,7 @@ gem "rubocop", "0.86.0", require: false
 gem "dotenv"
 gem "nanoid"
 gem "pg"
+gem "pry"
 
 group :production do
   gem "puma"

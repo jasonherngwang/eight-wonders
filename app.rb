@@ -1,8 +1,10 @@
+require "bundler/setup"
 require "dotenv/load"
 require "sinatra"
 require "sinatra/content_for"
 require "tilt/erubis"
 require "nanoid"
+require "pry"
 
 require_relative "lib/itinerary_handler"
 require_relative "lib/helpers"
@@ -43,6 +45,22 @@ get "/itinerary/new" do
   redirect "/itinerary/#{code}"
 end
 
+# Validate itinerary code, returning itself if valid.
+def validate_itinerary_code(code)
+  begin
+    itinerary_info = @itinerary_handler.find_itinerary_info(code)
+    unless itinerary_info["editable"] == "t"
+      session[:error] = "That itinerary is not editable."
+      redirect "/"
+    end
+  rescue InvalidItineraryCodeError => e
+    session[:error] = e.message
+    redirect "/"
+  end
+
+  code
+end
+
 # Retrieve existing itinerary
 get "/itinerary/retrieve" do
   code = params[:code]
@@ -54,38 +72,24 @@ get "/itinerary/retrieve" do
     status 422
     redirect "/"
   end
-  # If input is valid, check if itinerary actually exists so we can display
-  # "retrieved" message.
-  begin
-    @itinerary_info = @itinerary_handler.find_itinerary_info(code)
-    session[:success] = "Itinerary #{code} has been retrieved."
-    redirect "/itinerary/#{code}"
-  rescue InvalidItineraryCodeError => e
-    session[:error] = e.message
-    redirect "/"
-  end
+  
+  code = validate_itinerary_code(params[:code])
+  
+  @itinerary_info = @itinerary_handler.find_itinerary_info(code)
+  session[:success] = "Itinerary #{code} has been retrieved."
+  redirect "/itinerary/#{code}"
 end
 
 # Display itinerary
 get "/itinerary/:code" do
-  code = params[:code]
-  begin
-    @itinerary = @itinerary_handler.find_itinerary_by_code(code)
-    # Prevent users from accessing the uneditable Favorite Itineraries.
-    unless @itinerary.editable
-      session[:error] = "That itinerary is not editable."
-      redirect "/"
-    end
-    # Available algorithms: sort_longitude, sort_tsp_naive, sort_tsp_dp
-    @itinerary.sort_destinations! do |coords|
-      sort_tsp_dp(coords)
-      # sort_tsp_naive(coords)
-      # sort_longitude(coords)
-    end
+  code = validate_itinerary_code(params[:code])
+  @itinerary = @itinerary_handler.find_itinerary_by_code(code)
 
-  rescue InvalidItineraryCodeError => e
-    session[:error] = e.message
-    redirect "/"
+  # Available algorithms: sort_longitude, sort_tsp_naive, sort_tsp_dp
+  @itinerary.sort_destinations! do |coords|
+    sort_tsp_dp(coords)
+    # sort_tsp_naive(coords)
+    # sort_longitude(coords)
   end
   
   erb :itinerary, layout: :layout
@@ -93,7 +97,7 @@ end
 
 # Delete itinerary
 post "/itinerary/:code/delete" do
-  code = params[:code]
+  code = validate_itinerary_code(params[:code])
   @itinerary_handler.delete_itinerary(code)
   session[:success] = "Itinerary #{code} has been deleted."
   redirect "/"
@@ -101,14 +105,14 @@ end
 
 # Render form to edit itinerary name
 get "/itinerary/:code/edit" do
-  code = params[:code]
+  code = validate_itinerary_code(params[:code])
   @itinerary_info = @itinerary_handler.find_itinerary_info(code)
   erb :edit_itinerary, layout: :layout
 end
 
 # Edit itinerary name
 post "/itinerary/:code" do
-  code = params[:code]
+  code = validate_itinerary_code(params[:code])
   name = params[:name].strip
   @itinerary_info = @itinerary_handler.find_itinerary_info(code)
 
@@ -126,8 +130,9 @@ end
 
 # Add destination to itinerary
 post "/itinerary/:code/destinations" do
-  code = params[:code]
+  code = validate_itinerary_code(params[:code])
   iata = params[:iata].strip.upcase
+  
   begin
     @itinerary_handler.add_destination(code, iata)
     session[:success] = "Airport #{iata} has been added to your itinerary."
@@ -140,8 +145,9 @@ end
 
 # Delete destination from itinerary
 post "/itinerary/:code/destinations/:id/delete" do
-  code = params[:code]
+  code = validate_itinerary_code(params[:code])
   destination_id = params[:id].to_i
+
   @itinerary_handler.delete_destination(destination_id)
   session[:success] = "Destination has been deleted."
 
@@ -150,7 +156,7 @@ end
 
 # Randomize rest of itinerary (up to 8 destinations)
 post "/itinerary/:code/randomize" do
-  code = params[:code]
+  code = validate_itinerary_code(params[:code])
   @itinerary = @itinerary_handler.find_itinerary_by_code(code)
 
   current_iatas = @itinerary.destinations.map(&:iata_code)
@@ -168,6 +174,7 @@ end
 
 # Copy an existing itinerary
 post "/itinerary/:code/copy" do
+  # Do not validate this code, since it might be an immutable itinerary.
   code = params[:code]
   new_code = Nanoid.generate(size: 8)
   @itinerary_handler.copy_itinerary(code, new_code)
@@ -177,7 +184,7 @@ end
 
 # Add experience to destination
 post "/itinerary/:code/destinations/:id/experiences" do
-  code = params[:code]
+  code = validate_itinerary_code(params[:code])
   destination_id = params[:id].to_i
   text = params[:text].strip
 
@@ -194,7 +201,7 @@ end
 
 # Delete experience from destination
 post "/itinerary/:code/destinations/:id/experiences/:experience_id" do
-  code = params[:code]
+  code = validate_itinerary_code(params[:code])
   experience_id = params[:experience_id].to_i
   @itinerary_handler.delete_experience(experience_id)
   session[:success] = "The experience has been deleted."
@@ -202,15 +209,15 @@ post "/itinerary/:code/destinations/:id/experiences/:experience_id" do
   redirect "/itinerary/#{code}"
 end
 
-get "/faq" do
-  erb :faq, layout: :layout
-end
-
 get "/itinerary/:code/sharing" do
-  code = params[:code]
+  code = validate_itinerary_code(params[:code])
   @itinerary = @itinerary_handler.find_itinerary_by_code(code)
 
   erb :sharing, layout: :layout
+end
+
+get "/faq" do
+  erb :faq, layout: :layout
 end
 
 not_found do

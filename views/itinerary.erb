@@ -74,7 +74,8 @@
 <ul id="destinations">
   <% @itinerary.destinations.each_with_index do |destination, idx| %>
     <%== erb :"destination_card", layout: nil, 
-             locals: { destination: destination, order: idx + 1, 
+             locals: { destination: destination,
+                       order: idx + 1, 
                        complete: @itinerary.destinations.size == 8 } %>
   <% end %>
 </ul>
