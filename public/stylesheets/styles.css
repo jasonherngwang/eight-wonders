@@ -18,7 +18,7 @@ body {
   display: flex;
   flex-direction: column;
   min-width: 300px;
-  max-width: 1020px;
+  max-width: 1024px;
   margin: 0 auto;
   padding: 0 8px 0 8px; /* Minimal side padding for mobile. */
   font-family: "Work Sans", Helvetica, Arial, sans-serif;
@@ -830,7 +830,7 @@ button.copy-itinerary:hover {
   /* Home Page */
   /* Header image and text section can now be placed side-by-side using Grid. */
   header#hero {
-    grid-template-columns: 1fr 2fr;
+    grid-template-columns: 33% 1fr;
     grid-template-areas: "hero-image hero-text";
     margin: 32px 0;
     height: 500px;
@@ -846,7 +846,7 @@ button.copy-itinerary:hover {
   header#hero figure.hero-image img {
     height: 100%;
     max-height: 550px;
-    max-width: 302px;
+    max-width: 100%;
     object-fit: cover;
   }
   header#hero section {
@@ -923,7 +923,7 @@ button.copy-itinerary:hover {
   }
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 768px) {
   /* Home Page */
   header#hero {
     height: 550px;
@@ -984,7 +984,7 @@ button.copy-itinerary:hover {
   }
 }
 
-@media screen and (min-width: 1020px) {
+@media screen and (min-width: 1024px) {
   /* Home Page */
   header#hero > section {
     padding: 0 40px;
