@@ -546,7 +546,6 @@ section#sharing-card div#card-caption {
 }
 
 section#sharing-card div#card-caption p {
-  /* color: var(--gold); */
   font-weight: 500;
   padding-top: 4px;
 }

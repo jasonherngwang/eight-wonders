@@ -9,7 +9,7 @@
       <section id="sharing-card">
         <img src="/images/sharing_bg.jpg" />
         <div id="city-names">
-          <% if @itinerary.destinations.size > 0%>
+          <% if @itinerary.destinations.size > 0 %>
             <% @itinerary.destinations.each do |destination| %>
               <p class="city-name"><%= destination.municipality %></p>
             <% end %>
@@ -19,16 +19,35 @@
         </div>
         <div id="card-caption">
           <p class="accent-color">EIGHT WONDERS</p>
-          <p>CODE: <%= @itinerary.code %></p>
+          <% if @display_sharing_code %>
+            <p>CODE: <%= @itinerary.code %></p>
+          <% end %>
         </div>
         <div class="corner-icon top-left">🌎</div>
         <div class="corner-icon top-right">✈️</div>
       </section>
-      <a href="/itinerary/<%= @itinerary.code %>">
-        <button class="inline-button" type="button">
-          RETURN TO ITINERARY
-        </button>
-      </a>
+      <div class="itinerary-button-wrapper">
+        <% if @display_sharing_code %>
+          <form action="/itinerary/<%= @itinerary.code %>/sharing" method="post">
+            <button class="inline-button" type="submit" 
+                    name="display_sharing_code" value="hide">
+              HIDE ITINERARY CODE
+            </button>
+          </form>
+        <% else %>
+          <form action="/itinerary/<%= @itinerary.code %>/sharing" method="post">
+            <button class="inline-button" type="submit"
+                    name="display_sharing_code" value="show">
+              SHOW ITINERARY CODE
+            </button>
+          </form>
+        <% end %>
+        <a href="/itinerary/<%= @itinerary.code %>">
+          <button class="inline-button" type="button">
+            RETURN TO ITINERARY
+          </button>
+        </a>
+      </div>
     </div>
     <figure>
       <img src="/images/illustration_suitcases.svg" 
