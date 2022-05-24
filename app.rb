@@ -186,7 +186,8 @@ post "/itinerary/:code/copy" do
     code = params[:code]
     new_code = Nanoid.generate(size: 8)
     @itinerary_handler.copy_itinerary(code, new_code)
-    session[:success] = "You've made a copy of itinerary #{code}."
+    session[:success] = "You've made a copy of itinerary #{code}. "\
+                        "The new code is #{new_code}."
     redirect "/itinerary/#{new_code}"
   rescue InvalidItineraryCodeError => e
     session[:error] = e.message

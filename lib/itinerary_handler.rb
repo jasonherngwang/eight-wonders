@@ -111,8 +111,10 @@ class ItineraryHandler
   # Copy itinerary
   def copy_itinerary(code, new_code)
     create_itinerary(new_code)
-
+    
     current_itinerary = find_itinerary_by_code(code)
+    update_itinerary_name(new_code, current_itinerary.name)
+
     current_itinerary.sort_destinations! do |coords|
       sort_tsp_dp(coords)
     end

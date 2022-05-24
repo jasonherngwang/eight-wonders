@@ -22,7 +22,7 @@
       <button class="inline-button delete" type="submit">DELETE ITINERARY</button>
     </form>
   </div>
-  <% if @itinerary.destinations.size > 1 %>
+  <% if @itinerary.destinations.size >= 1 %>
     <p>🗺️ View flight path on GC Map<a href="#gcmap-note"><sup>[1]</sup></a>:</p>
     <a href="http://www.gcmap.com/mapui?P=<%= @itinerary.flight_path %>" target="_blank">
       <%= @itinerary.flight_path %>
@@ -81,5 +81,6 @@
                        complete: @itinerary.destinations.size == 8 } %>
   <% end %>
 </ul>
-<p id="gcmap-note" class="footnote">[1] Discrepancies between the OurAirports and GC Map data could yield an incorrect flight map. GC Map may be unable to find an IATA code or have it referencing a different airport. To fix, select a different airport.</p>
-<p id="gcmap-note" class="footnote">[2] .</p>
+<% if @itinerary.destinations.size >= 1 %>
+  <p id="gcmap-note" class="footnote">[1] Discrepancies between the OurAirports and GC Map data could yield an incorrect flight map. GC Map may be unable to find an IATA code or have it referencing a different airport. To fix, select a different airport.</p>
+<% end %>
