@@ -68,7 +68,8 @@ class ItineraryHandler
           ON a.id = d.airport_id
         LEFT JOIN experiences e
           ON d.id = e.destination_id
-       WHERE i.code = $1;
+       WHERE i.code = $1
+       ORDER BY d.id;
     SQL
     result = query(sql, code)
 
