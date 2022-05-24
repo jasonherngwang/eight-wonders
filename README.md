@@ -33,7 +33,7 @@ The idea is that you can visit the [Seven Wonders of the World](https://en.wikip
 
 ## How it Works
 
-Eight Wonders is an project built halfway through the [Launch School](https://launchschool.com/) Core Curriculum. The material covered by this point includes fundamental Ruby syntax, OOP, closures, regex, testing, application packaging, deployment, networking, databases, HTML & CSS, and problem solving. I built this to use what I've learned to make something fun.
+Eight Wonders is an project I built halfway through the [Launch School](https://launchschool.com/) Core Curriculum, to make something fun using what I've learned. The material covered up to this point includes fundamental Ruby syntax, OOP, closures, regex, testing, deployment, networking, databases, HTML & CSS, and problem solving.
 
 ### :gem: Built With:
 
@@ -51,7 +51,7 @@ This is an example of the Traveling Salesman Problem (TSP), which asks:
 
 >"Given a list of cities and the distances between each pair of cities, what is the shortest possible route that visits each city exactly once and returns to the origin city?"
 
-We solve for the lowest-cost Hamiltonian cycle for an undirected symmetric graph. Of three algorithms considered, the dynamic programming solution was selected to provide an exact solution with acceptable compututation speed (`n ≤ 8`).
+To solve this, we find the lowest-cost Hamiltonian cycle for an undirected symmetric graph. Of three algorithms considered, the dynamic programming solution was selected to provide an exact solution with acceptable computation time for `n ≤ 8`.
 
 | Algorithm | Description | Accuracy | Time Complexity |
 | --- | --- | --- | --- |
@@ -59,4 +59,4 @@ We solve for the lowest-cost Hamiltonian cycle for an undirected symmetric graph
 | [Naive approach](https://github.com/jasonherngwang/eight-wonders/blob/main/lib/shortest_path_algos.rb#L180) | Compute travel distances for all possible routes, and select the shortest. | Exact | *O(n!)* |
 | [Dynamic programming (Held-Karp)](https://github.com/jasonherngwang/eight-wonders/blob/main/lib/shortest_path_algos.rb#L260) | Iteratively find the shortest travel path from the starting location to cities that are `1` through `n-1` nodes away, storing results in a DP table for reference in subsequent iterations. Add the "return home" segment to all paths in the final table, and select the shortest. Code adapted from [rameziophobia](https://github.com/rameziophobia/Travelling_Salesman_Optimization/blob/master/dynamic_programming.py). | Exact | *O(2^n n^2)* |
 
-Distance between locations around the world are calculated using the [haversine formula](https://community.esri.com/t5/coordinate-reference-systems-blog/distance-on-a-sphere-the-haversine-formula/ba-p/902128).
+Distances between locations around the world are calculated using the [haversine formula](https://community.esri.com/t5/coordinate-reference-systems-blog/distance-on-a-sphere-the-haversine-formula/ba-p/902128).
