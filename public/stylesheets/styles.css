@@ -327,7 +327,7 @@ section#randomize-destination p {
   margin-bottom: 8px;
 }
 
-ul#destinations {
+main > ul#destinations {
   margin-top: 24px;
 }
 
