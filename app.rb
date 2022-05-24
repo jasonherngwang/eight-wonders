@@ -226,6 +226,9 @@ get "/itinerary/:code/sharing" do
   code = validate_itinerary_code(params[:code])
   @display_sharing_code = session[:display_sharing_code]
   @itinerary = @itinerary_handler.find_itinerary_by_code(code)
+  @itinerary.sort_destinations! do |coords|
+    sort_tsp_dp(coords)
+  end
   
   erb :sharing, layout: :layout
 end
