@@ -43,8 +43,6 @@ Eight Wonders is an project built halfway through the [Launch School](https://la
 * PostgreSQL database
 * Tests written in Minitest
 * Vanilla HTML, CSS, and JS
-* [autoComplete.js](https://tarekraafat.github.io/autoComplete.js/#/) search
-* ID generation with [Nano ID](https://github.com/ai/nanoid)
 * Github Action for continuous deployment to [fly.io](https://fly.io/)
 
 ### :1234: How Do You Find the Shortest Path?

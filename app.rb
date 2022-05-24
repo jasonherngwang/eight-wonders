@@ -25,7 +25,7 @@ end
 # Filters
 before do
   @itinerary_handler = ItineraryHandler.new(logger)
-  session[:display_sharing_code] = true if session[:display_sharing_code].nil?
+  session[:display_sharing_code] = "show" if session[:display_sharing_code].nil?
 end
 
 after do
@@ -225,7 +225,6 @@ end
 get "/itinerary/:code/sharing" do
   code = validate_itinerary_code(params[:code])
   @display_sharing_code = session[:display_sharing_code]
-  p @display_sharing_code
   @itinerary = @itinerary_handler.find_itinerary_by_code(code)
   
   erb :sharing, layout: :layout

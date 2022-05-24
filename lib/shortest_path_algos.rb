@@ -550,7 +550,7 @@ def sort_tsp_dp(coords)
       path + [0]
     ]
   end.min
-  p "Shortest path: #{shortest_path[1]} (#{shortest_path[0]} miles)"
+  # p "Shortest path: #{shortest_path[1]} (#{shortest_path[0]} miles)"
 
   shortest_path_indices = shortest_path[1][0...-1]
   

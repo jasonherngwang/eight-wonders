@@ -35,6 +35,10 @@ class RoutingTest < Minitest::Test
     @itinerary_handler.delete_all_data
   end
 
+  def session
+    last_request.env["rack.session"]
+  end
+
   def test_index
     get "/"
 
@@ -116,12 +120,24 @@ class RoutingTest < Minitest::Test
   end
 
   def test_copy_itinerary
-    get "/itinerary/itin0001/copy"
-
+    post "/itinerary/itin0001/copy"
+    
     assert_equal 302, last_response.status
     get last_response["Location"]
-
+    
+    expected = "You've made a copy of itinerary itin0001."
+    assert_includes last_response.body, expected
     refute_includes last_response.body, "ITINERARY CODE: itin0001"
+  end
+  
+  def test_copy_itinerary_invalid_code
+    post "/itinerary/itin0008/copy"
+    
+    assert_equal 302, last_response.status
+    get last_response["Location"]
+    
+    expected = "Itinerary with code itin0008 does not exist."
+    assert_includes last_response.body, expected
   end
 
   def test_share_itinerary
@@ -132,6 +148,17 @@ class RoutingTest < Minitest::Test
     assert_includes last_response.body, "Take a Screenshot"
     assert_includes last_response.body, "itin0001"
     assert_includes last_response.body, "Los Angeles"
+    assert_includes last_response.body, "<p>CODE: itin0001</p>"
+  end
+
+  def test_toggle_sharing_code
+    post "/itinerary/itin0001/sharing", { display_sharing_code: "hide" }
+
+    assert_equal 302, last_response.status
+    get last_response["Location"]
+
+    assert_equal false, session[:display_sharing_code]
+    refute_includes last_response.body, "<p>CODE: itin0001</p>"
   end
 
   def test_add_destination
@@ -151,7 +178,7 @@ class RoutingTest < Minitest::Test
     assert_equal 302, last_response.status
     get last_response["Location"]
 
-    expected = "Airport with IATA code YOLO does not exist."
+    expected = "Please enter a valid 3-letter IATA code."
     assert_includes last_response.body, expected
   end
 
@@ -221,6 +248,15 @@ class RoutingTest < Minitest::Test
 
     assert_includes last_response.body, "Frequently Asked Questions"
   end
+
+  def test_not_found
+    get "/tacos"
+
+    assert_equal 302, last_response.status
+    get last_response["Location"]
+
+    assert_includes last_response.body, "round-the-world"
+  end
   
   def test_sort_tsp_dp
     coords = [
@@ -236,13 +272,13 @@ class RoutingTest < Minitest::Test
 
       # Incorrect order, and expected index mapping
       [33.942501,   -118.407997],   # LAX 0 => 0
-      [40.639801,    -73.7789],     # JFK 1 => 7
-      [55.61790085,   12.65600014], # CPH 2 => 3
-      [49.012798,      2.55],       # CDG 3 => 5
-      [22.308901,    113.915001],   # HKG 4 => 2
-      [43.356499,     -1.79061],    # EAS 5 => 6
-      [51.4706,       -0.461941],   # LHR 6 => 4
-      [34.78549957,  135.4380035]   # ITM 7 => 1
+      [40.639801,    -73.7789],     # JFK 7 => 1
+      [55.61790085,   12.65600014], # CPH 3 => 2
+      [49.012798,      2.55],       # CDG 5 => 3
+      [22.308901,    113.915001],   # HKG 2 => 4
+      [43.356499,     -1.79061],    # EAS 6 => 5
+      [51.4706,       -0.461941],   # LHR 4 => 6
+      [34.78549957,  135.4380035]   # ITM 1 => 7
     ]
 
     expected = { 0 => 0, 1 => 7, 2 => 3, 3 => 5,
