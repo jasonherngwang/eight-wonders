@@ -53,7 +53,7 @@ This is an example of the Traveling Salesman Problem (TSP), which asks:
 
 >"Given a list of cities and the distances between each pair of cities, what is the shortest possible route that visits each city exactly once and returns to the origin city?"
 
-The solution involves finding the lowest-cost Hamiltonian cycle for an undirected symmetric graph. Of three algorithms considered, the dynamic programming solution was selected due to a desire for an exact solution. Since `n ≤ 8`, the computation speed was acceptable.
+We must solve for the lowest-cost Hamiltonian cycle for an undirected symmetric graph. Of three algorithms considered, the dynamic programming solution was selected due to a desire for an exact solution. Since `n ≤ 8`, the computation speed was acceptable.
 
 | Algorithm | Description | Accuracy | Time Complexity |
 | --- | --- | --- | --- |

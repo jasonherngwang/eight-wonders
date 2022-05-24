@@ -2,24 +2,24 @@ require "set"
 
 # Test Data
 coords = [
-  # Correct order
-  # [33.942501,   -118.407997],    # LAX
-  # [34.78549957,  135.4380035],   # ITM
-  # [22.308901,    113.915001],    # HKG
-  # [55.61790085,   12.65600014],  # CPH
-  # [51.4706,       -0.461941],    # LHR
-  # [49.012798,      2.55],        # CDG
-  # [43.356499,     -1.79061],     # EAS
-  # [40.639801,    -73.7789]       # JFK
   # Incorrect order
   [33.942501,   -118.407997],   # LAX
-  [40.639801,    -73.7789],     # JFK
   [55.61790085,   12.65600014], # CPH
   [49.012798,      2.55],       # CDG
   [22.308901,    113.915001],   # HKG
+  [40.639801,    -73.7789],     # JFK
   [43.356499,     -1.79061],    # EAS
-  [51.4706,       -0.461941],   # LHR
-  [34.78549957,  135.4380035]   # ITM
+  [34.78549957,  135.4380035],  # ITM
+  [51.4706,       -0.461941]    # LHR
+  # Correct order
+  # [33.942501,   -118.407997],   # LAX
+  # [40.639801,    -73.7789],     # JFK
+  # [43.356499,     -1.79061],    # EAS
+  # [51.4706,       -0.461941],   # LHR
+  # [49.012798,      2.55],       # CDG
+  # [55.61790085,   12.65600014], # CPH
+  # [22.308901,    113.915001],   # HKG
+  # [34.78549957,  135.4380035]   # ITM
 ]
 
 =begin
@@ -74,59 +74,46 @@ Examples, Test Cases
 Input: Array of coordinates that IS NOT ordered in the shortest path
 [
   [33.942501,   -118.407997],   # LAX
-  [40.639801,    -73.7789],     # JFK
   [55.61790085,   12.65600014], # CPH
   [49.012798,      2.55],       # CDG
   [22.308901,    113.915001],   # HKG
+  [40.639801,    -73.7789],     # JFK
   [43.356499,     -1.79061],    # EAS
-  [51.4706,       -0.461941],   # LHR
-  [34.78549957,  135.4380035]   # ITM
+  [34.78549957,  135.4380035],  # ITM
+  [51.4706,       -0.461941]    # LHR
 ]
 
 This is the shortest path:
 [
   [33.942501,   -118.407997],   # LAX
-  [34.78549957,  135.4380035],  # ITM
-  [22.308901,    113.915001],   # HKG
-  [55.61790085,   12.65600014], # CPH
+  [40.639801,    -73.7789],     # JFK
+  [43.356499,     -1.79061],    # EAS
   [51.4706,       -0.461941],   # LHR
   [49.012798,      2.55],       # CDG
-  [43.356499,     -1.79061],    # EAS
-  [40.639801,    -73.7789]      # JFK
+  [55.61790085,   12.65600014], # CPH
+  [22.308901,    113.915001],   # HKG
+  [34.78549957,  135.4380035]   # ITM
 ]
 
 Output should be this Hash, which maps original to new index.
-- For example, JFK was in index 1, but is mapped to index 7.
+- For example, JFK was in index 4, but is mapped to index 1.
 - The first index always maps to 0, since it is the starting airport.
-- This results in a westward round-the-world flight.
-- We first fly across the Pacific Ocean from Los Angeles to Osaka, before
-  continuing westward around the world.
+- This results in a eastward round-the-world flight.
+- We first fly transcontintental from Los Angeles to New York, before
+  continuing eastward around the world.
 
 {
   0 => 0,
-  1 => 7,
-  2 => 3,
-  3 => 5,
-  4 => 2,
-  5 => 6,
-  6 => 4,
-  7 => 1,
-}
-
-The reverse, an eastward round-the-world flight, is also acceptable.
-- In this example, we first fly eastward trans-continent from Los Angeles to 
-  New York, before continuing around the world.
-
-{
-  0 => 0,
-  1 => 1,
-  2 => 5,
-  3 => 3,
-  4 => 6,
+  4 => 1,
   5 => 2,
-  6 => 4,
-  7 => 7,
+  7 => 3,
+  2 => 4,
+  1 => 5,
+  3 => 6,
+  6 => 7
 }
+
+The reverse, an westward round-the-world flight, is also acceptable.
 
 Data Structure
 ------------------------------------------
@@ -157,24 +144,23 @@ Algorithm
 =end
 
 def sort_longitude(coords)
-  # Extract longitudes out of coordinate lat/lon pairs.
+  # Extract longitudes out of coordinate [lat, lon] pairs.
   longitudes = coords.map { |c| c[1] }
-  # Normalize: Add 360 degrees to all negative longitudes.
+  # 1. Normalize: Add 360 degrees to all negative longitudes.
   normalized_lon = longitudes.map { |lon| lon < 0 ? lon + 360 : lon }
-  # Subtract starting airport's longitude from all.
+  # 2. Subtract starting airport's longitude from all.
   shifted_lon = normalized_lon.map { |lon| lon - normalized_lon.first }
-  # Normalize again to [0, 360].
+  # 3. Normalize again.
   normalized_lon = shifted_lon.map { |lon| lon < 0 ? lon + 360 : lon }
-  # Pair original index with normalized longitude, 
-  # each as a 2-element Array: [idx, lon].
-  initial_idx = (0...longitudes.size).zip(normalized_lon)
-  # Freeze first pair, and sort remaining pairs by normalized longitude.
-  sorted_idx = [initial_idx.first] + 
-               initial_idx[1..-1].sort_by do |(_, normalized_lon)|
+  # Pair original index with longitude: [idx, lon].
+  original_idx = (0...longitudes.size).zip(normalized_lon)
+  # Reserve first value, and sort remaining by longitude.
+  sorted_idx = [original_idx.first] + 
+               original_idx[1..-1].sort_by do |(_, normalized_lon)|
                  normalized_lon
                end
-  # Pair the sorted indices with an new index that will be used for sorting.
-  index_mapping = sorted_idx.map.with_index do |(current_idx, normalized_lon), new_idx|
+  # Pair sorted indices with new consecutive indices.
+  sorted_idx.map.with_index do |(current_idx, normalized_lon), new_idx|
     [current_idx, new_idx]
   end.to_h
 end

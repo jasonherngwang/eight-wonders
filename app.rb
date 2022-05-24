@@ -180,12 +180,17 @@ end
 
 # Copy an existing itinerary
 post "/itinerary/:code/copy" do
-  # Do not validate this code, since it might be an immutable itinerary.
-  code = params[:code]
-  new_code = Nanoid.generate(size: 8)
-  @itinerary_handler.copy_itinerary(code, new_code)
-  session[:success] = "You've made a copy of itinerary #{code}."
-  redirect "/itinerary/#{new_code}"
+  begin
+    # Do not validate this code, since it might be an immutable itinerary.
+    code = params[:code]
+    new_code = Nanoid.generate(size: 8)
+    @itinerary_handler.copy_itinerary(code, new_code)
+    session[:success] = "You've made a copy of itinerary #{code}."
+    redirect "/itinerary/#{new_code}"
+  rescue InvalidItineraryCodeError => e
+    session[:error] = e.message
+    redirect "/"
+  end
 end
 
 # Add experience to destination
